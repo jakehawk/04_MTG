@@ -6,7 +6,8 @@ var express 		= require('express'),
 		mongoose 		= require('mongoose'),
 		bodyParser 	= require('body-parser');
 
-mongoose.connect('mongodb://localhost:27017/mtg-stuff-1');
+var db = process.env.MONGODB_URI || 'mongodb://localhost/mtg-stuff-1';
+mongoose.connect(db);
 
 var routes = require('./config/routes');
 
