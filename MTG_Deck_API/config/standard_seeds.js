@@ -9,16 +9,17 @@ var spells = [];
 
 mtg.card.all({ set: 'AER'})
   .on('data' spell => {
-    if (spells.includes(spell.name))
-      spells.push(spell);
+    spells.push(spell);
   });
 
+
+
 Bean.remove({}, function(err) {
+  if (err) throw err
+  Bean.create(beans, function(err, beans) {
     if (err) throw err
-    Bean.create(beans, function(err, beans) {
-        if (err) throw err
-        console.log(`Database seeded with ${beans.length} beans.`)
-        mongoose.connection.close()
-        process.exit()
+    console.log(`Database seeded with ${beans.length} beans.`)
+    mongoose.connection.close()
+    process.exit()
     })
 })
