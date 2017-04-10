@@ -128,7 +128,7 @@ axios.all([
   .then(axios.spread((aer1, aer2, kld1, kld2, kld3, emn1, emn2, soi1, soi2, soi3, ogw1, ogw2, bfz1, bfz2, bfz3)=> {
     Spell.remove({}, (err)=> {
       if (err) throw err;
-      
+
       console.log('Standard database is cleared.');
       pushInfo(aer1);
       pushInfo(aer2);
@@ -152,7 +152,7 @@ axios.all([
         process.exit()
         });
     });
-console.log('end of api code');
+  console.log('end of api code');
 }))
 
 
