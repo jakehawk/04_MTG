@@ -2,21 +2,21 @@ const mongoose = require('mongoose');
 
 var Deck = require('./Deck');
 
-var UserSchema = new mongoose.Schema({
+var userSchema = new mongoose.Schema({
 	email : { type: String, required: true, unique: true },
 	name 	: { type: String, required: true },
-	decks : [Deck.schema]
+	// decks : [Deck.schema]
 });
 
-UserSchema.plugin(require('mongoose-bcrypt'));
+userSchema.plugin(require('mongoose-bcrypt'));
 
-UserSchema.options.toJSON = {
+userSchema.options.toJSON = {
 	transform : (document, returnedObject, options)=> {
 		delete returnedObject.password;
 		return returnedObject;
 	}
 };
 
-var User = mongoose.model('User', UserSchema);
+var User = mongoose.model('User', userSchema);
 
 module.exports = User;

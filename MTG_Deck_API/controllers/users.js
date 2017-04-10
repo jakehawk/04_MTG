@@ -4,6 +4,7 @@ module.exports.create = (req, res, next)=> {
   if (!req.body.password) {
     return res.status(422).send('Missing required fields');
   }
+  
   User
     .create(req.body)
     .then(function(user) {

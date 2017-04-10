@@ -1,5 +1,6 @@
-const {router} = require('express'),
-			passport = require('passport');
+var express = require('express'),
+		router 	= express.Router();
+		token 	= require('./token_auth');
 
 var {create, me} = require('../controllers/users');
 

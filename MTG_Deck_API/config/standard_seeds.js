@@ -62,13 +62,13 @@ function getSpellInfo(spell) {
   });
 }
 console.log('outside of everything');
-    mtg.card.where({ set: 'AER' })
-      .then(cards => {
-        for (var i = 0, len = cards.length; i < len; i++) {
-          console.log(cards[i].name);
-        }
-      })
-      console.log('other side');
+mtg.card.where({ set: 'AER' })
+  .then(cards => {
+    for (var i = 0, len = cards.length; i < len; i++) {
+      console.log(cards[i].name);
+    }
+  });
+console.log('other side');
 
 Spell.remove({}, function(err) {
   if (err) throw err;
