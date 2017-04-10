@@ -2,7 +2,19 @@ var express = require('express'),
 		router 	= express.Router();
 		token 	= require('./token_auth');
 
-var {create, me} = require('../controllers/users');
+var {
+			create, 
+			me
+		} = require('../controllers/users'),
+		{
+			getAll,
+			createDeck,
+			getDeck,
+			updateDeck
+		}	= require('../controllers/decks'),
+		{
+			allStandard
+		} = require('../controllers/standardSpells')
 
 router.route('/api/users')
 
@@ -13,5 +25,18 @@ router.route('/api/me')
 
 	// GET user info while logged in
 	.get(token.authenticate, me);
+
+router.route('/api/decks')
+
+	// GET index of all decks
+	.get(getAll)
+
+	//POST a new deck
+	.post(createDeck);
+
+router.route('/api/standard')
+
+	// GET index of all standard spells
+	.get(allStandard);
 
 module.exports = router;

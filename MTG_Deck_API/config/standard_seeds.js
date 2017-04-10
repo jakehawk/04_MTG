@@ -67,30 +67,33 @@ mtg.card.where({ set: 'AER' })
     for (var i = 0, len = cards.length; i < len; i++) {
       console.log(cards[i].name);
     }
-  });
+  })
+  .done(
+
+    Spell.remove({}, function(err) {
+      if (err) throw err;
+      console.log('Standard database is cleared.');
+      console.log(spells);
+      var waiting = true;
+      // while (waiting) {
+      //   console.log('waiting',spells)
+      //   // mtg.card.all({ set: 'AER' })
+      //   //   .on('data', card => {
+      //   //     console.log('inside AER fetch');
+      //   //     getSpellInfo(card);
+      //   //     waiting = false;
+      //   //   });
+      // }
+      Spell.create(spells, function(err, spells) {
+        if (err) throw err
+        console.log(`Database seeded with Standard Legal cards. Total of ${spells.length} cards.`)
+        mongoose.connection.close()
+        process.exit()
+        });
+    })
+  )
 console.log('other side');
 
-Spell.remove({}, function(err) {
-  if (err) throw err;
-  console.log('Standard database is cleared.');
-  console.log(spells);
-  var waiting = true;
-  // while (waiting) {
-  //   console.log('waiting',spells)
-  //   // mtg.card.all({ set: 'AER' })
-  //   //   .on('data', card => {
-  //   //     console.log('inside AER fetch');
-  //   //     getSpellInfo(card);
-  //   //     waiting = false;
-  //   //   });
-  // }
-  Spell.create(spells, function(err, spells) {
-    if (err) throw err
-    console.log(`Database seeded with Standard Legal cards. Total of ${spells.length} cards.`)
-    mongoose.connection.close()
-    process.exit()
-    });
-})
 
 
 

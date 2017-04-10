@@ -3,9 +3,9 @@ var Deck = require('../models/Deck');
 // GET - INDEX all decks ====================================================
 module.exports.getAll = (req, res)=> {
 	Deck.find((err, decks)=> {
-		if(err) res.json({ message: 'Could not find any decks'});
+		if (err) res.json({ message: 'Could not find any decks'});
 
-		res.json({ decks: decks})
+		res.json({ decks: decks});
 	}).select('-__v');
 };
 // ==========================================================================
@@ -13,7 +13,7 @@ module.exports.getAll = (req, res)=> {
 // POST - CREATE a new deck =================================================
 module.exports.createDeck = (req, res)=> {
 	var deck = new Deck(req.body);
-
+	console.log(deck);
 	deck.save((err)=> {
 		if (err) res.json({ message: `Could not create deck b/c: ${error}`});
 
@@ -38,10 +38,10 @@ module.exports.getDeck = (req, res)=> {
 module.exports.updateDeck = (req, res)=> {
 	var id = req.params.id;
 
-	Deck.findById({_id: id}, (err, deck) {
+	Deck.findById({_id: id}, (err, deck)=> {
 		if (err) res.json({ message: `Could not find deck b/c: ${err}`});
 
-		if (req.body.name)
+		
 	});
 }
 

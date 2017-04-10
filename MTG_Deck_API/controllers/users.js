@@ -26,6 +26,14 @@ module.exports.create = (req, res, next)=> {
     });
 };
 
+module.exports.index = (req, res, next)=> {
+  User.find((err, users)=> {
+    if (err) res.json({ message: `Could not find any users b/c: ${err}`});
+
+    res.json({ users: users });
+  }).select('-__v');
+};
+
 module.exports.me = (req, res, next)=> {
   User
     .findOne({ email: req.decoded.email }).exec()
