@@ -64,16 +64,25 @@ module.exports.updateDeck = (req, res)=> {
 				side 	: side
 			};
 
-			console.log('qty', qty)
-			if (!req.body.update && spell.qty){
-				console.log(spells)
-				deck.spells.push(spell);
+			console.log(spell);
+
+			var includes = indexOfObject(deck.spells, spell.info, spell.side)
+
+
+			// Add a spell to the deck
+			// console.log(!req.body.update && spell.qty && includes)
+
+			if (!req.body.update){
+				console.log(deck.spells)
+				if (includes == -1) deck.spells.push(spell);
 				console.log(deck.spells);
 				deck.save( (err)=> {
 					if (err) res.json({ message: `Could not add spell bc: ${err}`});
 
 					res.json(deck);
 				});
+
+			// Delete a spell from the deck
 			} else if (qty == 0){
 				console.log('delete')
 				var index = indexOfObject(deck.spells, spell.info, spell.side);
@@ -82,6 +91,8 @@ module.exports.updateDeck = (req, res)=> {
 				deck.save( (err)=> {
 					if (err) res.json({ message: `Could not update deck b/c: ${err}`})
 				})
+
+			// Update the qty of a spell in the deck
 			} else {
 				console.log('update qty')
 				var index = indexOfObject(deck.spells, spell.info, spell.side);
