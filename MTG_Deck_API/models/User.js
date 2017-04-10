@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
+var Deck = require('./Deck');
+
 var UserSchema = new mongoose.Schema({
 	email : { type: String, required: true, unique: true },
-	name 	: { type: String, required: true }
+	name 	: { type: String, required: true },
+	decks : [Deck.schema]
 });
 
 UserSchema.plugin(require('mongoose-bcrypt'));
