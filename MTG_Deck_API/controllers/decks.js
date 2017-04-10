@@ -36,10 +36,11 @@ module.exports.getDeck = (req, res)=> {
 // ==========================================================================
 
 // PATCH - UPDATE a deck ====================================================
-module.exports.updateDeck = (req, res)=> {
-	var id = req.params.id;
-	var name = req.body.name;
-	var qty = req.body.qty;
+module.exports.addCard = (req, res)=> {
+	var id 		= req.params.id,
+			name 	= req.body.name,
+			qty 	= req.body.qty,
+			side 	= req.body.side || false;
 
 	console.log('name:',name)
 
@@ -48,8 +49,9 @@ module.exports.updateDeck = (req, res)=> {
 		StandardSpell.find({name: name}, (err, spells)=> {
 			console.log(spells)
 			var spell = {
-				info: spells[0]._id,
-				qty: qty
+				info 	: spells[0]._id,
+				qty 	: qty,
+				side 	: side
 			};
 			deck.spells.push(spell);
 			console.log(deck.spells);
@@ -59,7 +61,6 @@ module.exports.updateDeck = (req, res)=> {
 				res.json(deck);
 			});
 		});
-		
 	});
 }
 
