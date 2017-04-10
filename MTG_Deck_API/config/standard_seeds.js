@@ -33,31 +33,36 @@ var bannedSpells = ['Smuggler\'s Copter', 'Reflector Mage', 'Emrakul, the Promis
 
 // function to parse relevant information from mtgapi call
 function getSpellInfo(spell) {
-  console.log(spell);
-  var colors = spell.manaCost.replace(/[{}]/g, '').split(''),
-      w=0, u=0, b=0, r=0, g=0, c=0;
-  for (var i = 0, len = colors.length; i < len; i++) {
-    switch (colors[i]) {
-      case 'W':
-        w++;
-        break;
-      case 'U':
-        u++;
-        break;
-      case 'B':
-        b++;
-        break;
-      case 'R':
-        r++;
-        break;
-      case 'G':
-        g++;
-        break;
-      case 'C':
-        c++;
-        break;
+  var  w=0, u=0, b=0, r=0, g=0, c=0;
+  
+  if (spell.manaCost) {
+    console.log(spell.name, spell.manaCost);
+    var colors = spell.manaCost.split('');
+    for (var i = 0, len = colors.length; i < len; i++) {
+      switch (colors[i]) {
+        case 'W':
+          w++;
+          break;
+        case 'U':
+          u++;
+          break;
+        case 'B':
+          b++;
+          break;
+        case 'R':
+          r++;
+          break;
+        case 'G':
+          g++;
+          break;
+        case 'C':
+          c++;
+          break;
+      }
     }
-  }
+  } else
+    console.log(spell.name);
+
 
   spells.push({
     name        : spell.name,
@@ -91,8 +96,13 @@ function getCards (set, page) {
   return axios.get(`${STANDARD_DB_URL}${set}&pageSize=100&page=${page}`);
 }
 
-function pushInfo () {
-  
+function pushInfo (set) {
+  var len = set.data.cards.length;
+
+  for (var i = 0; i < len; i++){
+    if (set.data.cards[i].name)
+      getSpellInfo(set.data.cards[i])
+  }
 }
 
 // MTG API only returns max 100 items per call
@@ -115,20 +125,26 @@ axios.all([
     getCards('bfz', 2),
     getCards('bfz', 3),
   ])
-  .then(axios.spread( (aer1, aer2, kld1, kld2, kld3, emn1, emn2, soi1, soi2, soi3, ogw1, ogw2, bfz1, bfz2, bfz3)=> {
-    var testing = [];
-    console.log(aer1.data.cards.length + aer2.data.cards.length + kld1.data.cards.length + kld2.data.cards.length + kld3.data.cards.length);
-
+  .then(axios.spread((aer1, aer2, kld1, kld2, kld3, emn1, emn2, soi1, soi2, soi3, ogw1, ogw2, bfz1, bfz2, bfz3)=> {
     Spell.remove({}, (err)=> {
       if (err) throw err;
+      
       console.log('Standard database is cleared.');
-      console.log(spells);
-      console.log(aer1.data.cards[0].name);
-      var len = aer1.data.cards.length;
-      for (var i = 0; i < len; i++)
-        getSpellInfo(aer1.data.cards[i])
-
-      console.log(spells);
+      pushInfo(aer1);
+      pushInfo(aer2);
+      pushInfo(kld1);
+      pushInfo(kld2);
+      pushInfo(kld3);
+      pushInfo(emn1);
+      pushInfo(emn2);
+      pushInfo(soi1);
+      pushInfo(soi2);
+      pushInfo(soi3);
+      pushInfo(ogw1);
+      pushInfo(ogw2);
+      pushInfo(bfz1);
+      pushInfo(bfz2);
+      pushInfo(bfz3);
       Spell.create(spells, (err, spells)=> {
         if (err) throw err
         console.log(`Database seeded with Standard Legal cards. Total of ${spells.length} cards.`)

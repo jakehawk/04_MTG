@@ -8,7 +8,8 @@ var DeckSchema = new mongoose.Schema({
 	spells 		: [
 		{
 			info 	: {type: mongoose.Schema.Types.ObjectId, ref: 'StandardSpell'},
-			qty 	: Number
+			qty 	: Number,
+			side  : {type: Boolean, default: false, required: true}
 		}
 	]
 });
