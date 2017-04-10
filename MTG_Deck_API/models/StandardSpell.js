@@ -3,13 +3,15 @@ const mongoose = require('mongoose');
 var StandardSpellSchema = mongoose.Schema({
 	name 		: String,
 	cmc 		: Number,
+	power 	: String,
+	tough 	: String,
 	colors  : [String], 
-	w			 	: { type: Number, required: true, default: 0},
-	u  			: { type: Number, required: true, default: 0},
-	b 			: { type: Number, required: true, default: 0},
-	r		 		: { type: Number, required: true, default: 0},
-	g				: { type: Number, required: true, default: 0},
-	c 			: { type: Number, required: true, default: 0},
+	wCount	: { type: Number, required: true, default: 0},
+	uCount 	: { type: Number, required: true, default: 0},
+	bCount 	: { type: Number, required: true, default: 0},
+	rCount	: { type: Number, required: true, default: 0},
+	gCount	: { type: Number, required: true, default: 0},
+	cCount 	: { type: Number, required: true, default: 0},
 	img_url : String
 });
 
