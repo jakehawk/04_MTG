@@ -10,7 +10,8 @@ var {
 			getAll,
 			createDeck,
 			getDeck,
-			updateDeck
+			updateDeck,
+			removeCard
 		}	= require('../controllers/decks'),
 		{
 			allStandard
@@ -39,7 +40,7 @@ router.route('/api/decks/:id')
 	// GET show a deck
 	.get(getDeck)
 
-	// PATCH update a deck
+	// PATCH add or remove a card from a deck
 	.patch(updateDeck);
 
 router.route('/api/standard')
