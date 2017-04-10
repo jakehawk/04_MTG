@@ -1,10 +1,5 @@
 var User = require("../models/User");
 
-module.exports = {
-  create: create,
-  me:     me
-};
-
 module.exports.create = (req, res, next)=> {
   if (!req.body.password) {
     return res.status(422).send('Missing required fields');

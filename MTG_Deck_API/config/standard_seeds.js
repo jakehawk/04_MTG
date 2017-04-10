@@ -17,10 +17,11 @@ function aoIndexOf(arr, search, prop) {
 
 // function to parse relevant information from mtgapi call
 function getSpellInfo(spell) {
+  console.log(spell);
   var colors = spell.manaCost.replace(/[{}]/g, '').split(''),
       w, u, b, r, g, c;
   for (var i = 0, len = colors.length; i < len; i++) {
-    switch colors[i] {
+    switch (colors[i]) {
       case 'W':
         w+=1;
         break;
@@ -60,42 +61,89 @@ function getSpellInfo(spell) {
     cCount      : c
   });
 }
-
-mtg.card.all({ set: 'AER'})
-  .on('data', spell => {
-    spells.push(getSpellInfo(spell));
-  });
-mtg.card.all({ set: 'KLD '})
-  .on('data', spell => {
-    if (spell.name !== bannedSpells[0])
-      spells.push(getSpellInfo(spell));
-  });
-mtg.card.all({ set: 'EMN'})
-  .on('data', spell => {
-    if (spell.name !== bannedSpells[2])
-      spells.push(getSpellInfo(spell));
-  });
-mtg.card.all({ set: 'SOI'})
-  .on('data', spell => {
-    spells.push(getSpellInfo(spell));
-  });
-mtg.card.all({ set: 'OGW'})
-  .on('data', spell => {
-    if (spell.name !== bannedSpells[1])
-      spells.push(getSpellInfo(spell));
-  });
-mtg.card.all({ set: 'BFZ'})
-  .on('data', spell => {
-    spells.push(getSpellInfo(spell));
-  });
+console.log('outside of everything');
+    mtg.card.where({ set: 'AER' })
+      .then(cards => {
+        for (var i = 0, len = cards.length; i < len; i++) {
+          console.log(cards[i].name);
+        }
+      })
+      console.log('other side');
 
 Spell.remove({}, function(err) {
   if (err) throw err;
   console.log('Standard database is cleared.');
+  console.log(spells);
+  var waiting = true;
+  // while (waiting) {
+  //   console.log('waiting',spells)
+  //   // mtg.card.all({ set: 'AER' })
+  //   //   .on('data', card => {
+  //   //     console.log('inside AER fetch');
+  //   //     getSpellInfo(card);
+  //   //     waiting = false;
+  //   //   });
+  // }
   Spell.create(spells, function(err, spells) {
     if (err) throw err
     console.log(`Database seeded with Standard Legal cards. Total of ${spells.length} cards.`)
     mongoose.connection.close()
     process.exit()
-    })
+    });
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  // mtg.card.all({ set: 'KLD '})
+  //   .on('data', spell => {
+  //     if (spell.name !== bannedSpells[0])
+  //       getSpellInfo(spell);
+  //   });
+  // mtg.card.all({ set: 'EMN'})
+  //   .on('data', spell => {
+  //     if (spell.name !== bannedSpells[2])
+  //       getSpellInfo(spell);
+  //   });
+  // mtg.card.all({ set: 'SOI'})
+  //   .on('data', spell => {
+  //     getSpellInfo(spell);
+  //   });
+  // mtg.card.all({ set: 'OGW'})
+  //   .on('data', spell => {
+  //     if (spell.name !== bannedSpells[1])
+  //       getSpellInfo(spell);
+  //   });
+  // mtg.card.all({ set: 'BFZ'})
+  //   .on('data', spell => {
+  //     getSpellInfo(spell);
+  //   });
