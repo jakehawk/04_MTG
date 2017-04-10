@@ -1,44 +1,60 @@
 var mongoose  = require('mongoose'),
     mtg       = require('mtgsdk'),
+    axios     = require('axios'),
     Spell     = require('../models/StandardSpell');
+
+const STANDARD_DB_URL = 'https://api.magicthegathering.io/v1/cards?set='
 
 var db = process.env.MONGODB_URI || 'mongodb://localhost/mtg-stuff-1';
 mongoose.connect(db);
 
 var spells = [];
-var bannedSpells = ['Smuggler\'s Copter', 'Reflector Mage', 'Emrakul, the Promised End'];
 
-function aoIndexOf(arr, search, prop) {
-  for (var i = 0, len = arr.length; i < len; i ++) {
-    if (arr[i][prop] === search) return i;
-  }
-  return -1;
-}
+// var defaultSpell = {
+//     name        : 'Testing',
+//     colors      : [ 'C' ],
+//     cmc         : 0,
+//     superTypes  : '',
+//     types       : 'Not a type',
+//     subtypes    : '',
+//     img_url     : 'https://goo.gl/LNhefX',
+//     power       : '',
+//     tough       : '',
+//     wCount      : 0,
+//     uCount      : 0,
+//     bCount      : 0,
+//     rCount      : 0,
+//     gCount      : 0,
+//     cCount      : 5
+//   };
+// spells.push(defaultSpell);
+
+var bannedSpells = ['Smuggler\'s Copter', 'Reflector Mage', 'Emrakul, the Promised End'];
 
 // function to parse relevant information from mtgapi call
 function getSpellInfo(spell) {
   console.log(spell);
   var colors = spell.manaCost.replace(/[{}]/g, '').split(''),
-      w, u, b, r, g, c;
+      w=0, u=0, b=0, r=0, g=0, c=0;
   for (var i = 0, len = colors.length; i < len; i++) {
     switch (colors[i]) {
       case 'W':
-        w+=1;
+        w++;
         break;
       case 'U':
-        u+=1;
+        u++;
         break;
       case 'B':
-        b+=1;
+        b++;
         break;
       case 'R':
-        r+=1;
+        r++;
         break;
       case 'G':
-        g+=1;
+        g++;
         break;
       case 'C':
-        c+=1;
+        c++;
         break;
     }
   }
@@ -46,11 +62,11 @@ function getSpellInfo(spell) {
   spells.push({
     name        : spell.name,
     colors      : spell.colorIdentity || [ 'C' ],
-    cmc         : spell.cmc,
+    cmc         : spell.cmc || 0,
     superTypes  : spell.supertypes || '',
     types       : spell.types,
     subtypes    : spell.subtypes || '',
-    img_url     : spell.imageUrl,
+    img_url     : spell.imageUrl || 'https://goo.gl/LNhefX',
     power       : spell.power || '',
     tough       : spell.toughness || '',
     wCount      : w,
@@ -61,39 +77,67 @@ function getSpellInfo(spell) {
     cCount      : c
   });
 }
-console.log('outside of everything');
-mtg.card.where({ set: 'AER' })
-  .then(cards => {
-    for (var i = 0, len = cards.length; i < len; i++) {
-      console.log(cards[i].name);
-    }
-  })
-  .done(
+// mtg.card.all({ set: 'AER' })
+//   .on('data', card => {
+//     console.log('will i ever get here?');
+//     console.log(card);
+//   })
+console.log('start api call');
 
-    Spell.remove({}, function(err) {
+// query MTG API by:
+// set name,
+// which page the card is on(each page holds 100 cards) 
+function getCards (set, page) {
+  return axios.get(`${STANDARD_DB_URL}${set}&pageSize=100&page=${page}`);
+}
+
+function pushInfo () {
+  
+}
+
+// MTG API only returns max 100 items per call
+// 
+axios.all([
+    getCards('aer', 1),
+    getCards('aer', 2),
+    getCards('kld', 1),
+    getCards('kld', 2),
+    getCards('kld', 3),
+    getCards('emn', 1),
+    getCards('emn', 2),
+    getCards('emn', 3),
+    getCards('soi', 1),
+    getCards('soi', 2),
+    getCards('soi', 3),
+    getCards('ogw', 1),
+    getCards('ogw', 2),
+    getCards('bfz', 1),
+    getCards('bfz', 2),
+    getCards('bfz', 3),
+  ])
+  .then(axios.spread( (aer1, aer2, kld1, kld2, kld3, emn1, emn2, soi1, soi2, soi3, ogw1, ogw2, bfz1, bfz2, bfz3)=> {
+    var testing = [];
+    console.log(aer1.data.cards.length + aer2.data.cards.length + kld1.data.cards.length + kld2.data.cards.length + kld3.data.cards.length);
+
+    Spell.remove({}, (err)=> {
       if (err) throw err;
       console.log('Standard database is cleared.');
       console.log(spells);
-      var waiting = true;
-      // while (waiting) {
-      //   console.log('waiting',spells)
-      //   // mtg.card.all({ set: 'AER' })
-      //   //   .on('data', card => {
-      //   //     console.log('inside AER fetch');
-      //   //     getSpellInfo(card);
-      //   //     waiting = false;
-      //   //   });
-      // }
-      Spell.create(spells, function(err, spells) {
+      console.log(aer1.data.cards[0].name);
+      var len = aer1.data.cards.length;
+      for (var i = 0; i < len; i++)
+        getSpellInfo(aer1.data.cards[i])
+
+      console.log(spells);
+      Spell.create(spells, (err, spells)=> {
         if (err) throw err
         console.log(`Database seeded with Standard Legal cards. Total of ${spells.length} cards.`)
         mongoose.connection.close()
         process.exit()
         });
-    })
-  )
-console.log('other side');
-
+    });
+console.log('end of api code');
+}))
 
 
 

@@ -17,6 +17,7 @@
   "author": "Jake Hawkinson",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.16.1",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "debug": "^2.6.3",

@@ -5,7 +5,7 @@ var DeckSchema = new mongoose.Schema({
 	name 			: String,
 	format 		: String,
 	colors 		: [String],
-	spell 		: [
+	spells 		: [
 		{
 			info 	: {type: mongoose.Schema.Types.ObjectId, ref: 'StandardSpell'},
 			qty 	: Number

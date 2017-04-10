@@ -34,6 +34,14 @@ router.route('/api/decks')
 	//POST a new deck
 	.post(createDeck);
 
+router.route('/api/decks/:id')
+
+	// GET show a deck
+	.get(getDeck)
+
+	// PATCH update a deck
+	.patch(updateDeck);
+
 router.route('/api/standard')
 
 	// GET index of all standard spells
