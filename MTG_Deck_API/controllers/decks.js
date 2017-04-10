@@ -1,9 +1,10 @@
 var Deck = require('../models/Deck');
 var StandardSpell = require('../models/StandardSpell');
 
-function indexOfObject (arr, search, prop) {
-	for (var i = 0, len = arr.length; i < len; i++)
-		if (arr[i][prop] === search) return i;
+function indexOfObject (arr, search, side) {
+	for (var i = 0, len = arr.length; i < len; i++){
+		if (String(arr[i].info) == search && String(arr[i].side) === side) return i;
+	}
 
 	return -1;
 }
@@ -57,13 +58,15 @@ module.exports.updateDeck = (req, res)=> {
 		StandardSpell.find({name: name}, (err, spells)=> {
 			if (err) res.json({message: `Could not find spell b/c: ${err}`})
 
-			if (!req.body.update){
+			var spell = {
+				info 	: spells[0]._id,
+				qty 	: qty,
+				side 	: side
+			};
+
+			console.log('qty', qty)
+			if (!req.body.update && spell.qty){
 				console.log(spells)
-				var spell = {
-					info 	: spells[0]._id,
-					qty 	: qty,
-					side 	: side
-				};
 				deck.spells.push(spell);
 				console.log(deck.spells);
 				deck.save( (err)=> {
@@ -71,9 +74,18 @@ module.exports.updateDeck = (req, res)=> {
 
 					res.json(deck);
 				});
+			} else if (qty == 0){
+				console.log('delete')
+				var index = indexOfObject(deck.spells, spell.info, spell.side);
+				console.log('index', index);
+				deck.spells.splice(index, 1);
+				deck.save( (err)=> {
+					if (err) res.json({ message: `Could not update deck b/c: ${err}`})
+				})
 			} else {
-				var index = indexOfObject(deck.spells, spells[0]._id, 'info');
-
+				console.log('update qty')
+				var index = indexOfObject(deck.spells, spell.info, spell.side);
+				console.log('index', index);
 				deck.spells[index].qty = qty;
 				deck.spells[index].side = side;
 				deck.save( (err)=> {
