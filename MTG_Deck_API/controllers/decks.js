@@ -50,8 +50,7 @@ module.exports.updateDeck = (req, res)=> {
 			qty 	= req.body.qty,
 			side 	= req.body.side || false;
 
-	console.log('name:', name);
-
+	// Find the deck 
 	Deck.findById({_id: id}, (err, deck)=> {
 		if (err) res.json({ message: `Could not find deck b/c: ${err}`});
 		
@@ -64,18 +63,13 @@ module.exports.updateDeck = (req, res)=> {
 				side 	: side
 			};
 
-			console.log(spell);
-
-			var includes = indexOfObject(deck.spells, spell.info, spell.side)
-
+			var includes 			= indexOfObject(deck.spells, spell.info, spell.side),
+					otherInclude 	= indexOfObject(deck.spells, spell.info, !spell.side);
 
 			// Add a spell to the deck
-			// console.log(!req.body.update && spell.qty && includes)
-
 			if (!req.body.update){
-				console.log(deck.spells)
+				console.log('add');
 				if (includes == -1) deck.spells.push(spell);
-				console.log(deck.spells);
 				deck.save( (err)=> {
 					if (err) res.json({ message: `Could not add spell bc: ${err}`});
 
@@ -84,9 +78,9 @@ module.exports.updateDeck = (req, res)=> {
 
 			// Delete a spell from the deck
 			} else if (qty == 0 && includes >= 0){
-				console.log('delete')
+				console.log('delete');
 				var index = indexOfObject(deck.spells, spell.info, spell.side);
-				console.log('index', index);
+
 				deck.spells.splice(index, 1);
 				deck.save( (err)=> {
 					if (err) res.json({ message: `Could not update deck b/c: ${err}`})
@@ -106,12 +100,13 @@ module.exports.updateDeck = (req, res)=> {
 
 					res.json(deck.spells[index]);
 				})
+			} else {
+				res.json({ message : `Please enter valid information`})
 			}
 		});
 	});
 };
 // ===============================================================================
-
 
 
 

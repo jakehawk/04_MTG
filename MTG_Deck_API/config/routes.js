@@ -11,7 +11,7 @@ var {
 			createDeck,
 			getDeck,
 			updateDeck,
-			removeCard
+			deleteDeck
 		}	= require('../controllers/decks'),
 		{
 			allStandard
