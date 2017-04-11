@@ -83,17 +83,19 @@ module.exports.updateDeck = (req, res)=> {
 				});
 
 			// Delete a spell from the deck
-			} else if (qty == 0){
+			} else if (qty == 0 && includes >= 0){
 				console.log('delete')
 				var index = indexOfObject(deck.spells, spell.info, spell.side);
 				console.log('index', index);
 				deck.spells.splice(index, 1);
 				deck.save( (err)=> {
 					if (err) res.json({ message: `Could not update deck b/c: ${err}`})
+
+					res.json(deck);
 				})
 
 			// Update the qty of a spell in the deck
-			} else {
+			} else if (includes >= 0) {
 				console.log('update qty')
 				var index = indexOfObject(deck.spells, spell.info, spell.side);
 				console.log('index', index);
