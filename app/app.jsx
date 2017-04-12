@@ -1,6 +1,14 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var {Route, Router, IndexRoute, hashHistory} = require('react-router');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import {
+			 	Route, 
+			 	Router, 
+			 	IndexRoute, 
+			 	hashHistory
+			 } = require('react-router');
+
+import DeckApp from 'DeckApp';
 
 // Load foundation
 $(document).foundation();
