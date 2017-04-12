@@ -9,8 +9,17 @@ import {
 			 } from 'react-router';
 
 import DeckApp from 'DeckApp';
-
+import MTGAPI from 'MTGAPI';
 var store = require('configureStore').configure();
+
+// store.subscribe(()=> {
+// 	var state = store.getState();
+// 	console.log('New state', state);
+// 	MTGAPI.getDecks(state.decks);
+// });
+
+var initialDecks = MTGAPI.getDecks();
+store.dispatch(actions.addDecks(initialDecks));
 
 // Load foundation
 $(document).foundation();
