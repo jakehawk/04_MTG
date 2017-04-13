@@ -10,6 +10,13 @@ export var decksReducer = (state = [], action)=> {
 	};
 };
 
+// export var showDeckReducer = (state = '', action)=> {
+// 	switch(action.type) {
+// 		case 'SHOW_DECK':
+		
+// 	}
+// }
+
 export var testingReducer = (state = 'nope', action)=> {
 	switch(action.type) {
 		case 'FUCK':

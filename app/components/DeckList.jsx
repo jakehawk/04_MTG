@@ -16,7 +16,7 @@ export class DeckList extends React.Component {
 			} else {
 				return decks.map((deck)=> {
 					return (
-						<DeckSummary key={deck.id} {...deck}/>
+						<DeckSummary key={deck._id} {...deck}/>
 					);
 				});
 			}

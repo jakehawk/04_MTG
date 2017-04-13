@@ -2,14 +2,6 @@ import axios from 'axios';
 
 const GET_DECKS_URL = 'http://mtg-deck-api.herokuapp.com/api/decks';
 
-export var addDecks = (decks)=> {
-	return {
-		type: 'ADD_DECKS',
-		decks
-	};
-};
-
-
 // Function handles api call
 export var startAddDecks = (decks)=> {
 	return (dispatch, getState)=> {
@@ -28,31 +20,19 @@ export var startAddDecks = (decks)=> {
 			});
 	};
 };
-// export var startIndexRecipes = (recipes) => {
-//     return (dispatch, getState) => {
-//         var recipes
 
-//         $.get(URL + '/recipes', (response) => {
-//             recipes = response
-//             dispatch(indexRecipes(recipes))
-//         })
-//     }
-// }
+// Once api call finishes this runs
+export var addDecks = (decks)=> {
+	return {
+		type: 'ADD_DECKS',
+		decks
+	};
+};
 
-
-// module.exports = {
-// 	getDecks: function () {
-// 		var requestUrl = GET_DECKS_URL;
-
-// 		return axios
-// 			.get(requestUrl)
-// 			.then((res)=> {
-// 				if (res.data.decks)
-// 					return res.data.decks;
-// 				else
-// 					return res.json('u r bad');
-// 			}, (res)=> {
-// 				throw new Error(res.data.message);
-// 			});
-// 	}
-// }
+// Redirect to view another deck
+export var showDeck = (deck)=> {
+	return {
+		type: 'SHOW_DECK',
+		deck
+	};
+};

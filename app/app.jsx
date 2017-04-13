@@ -28,7 +28,11 @@ require('style!css!sass!applicationStyles')
 
 ReactDOM.render(
   <Provider store={store}>
-  	<DeckApp/>
+  	<Router history={hashHistory}>
+  		<Route path="/">
+  			<IndexRoute component={DeckApp}/>
+  		</Route>
+  	</Router>
   </Provider>,
   document.getElementById('app')
 );
