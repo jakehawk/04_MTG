@@ -7,5 +7,16 @@ export var decksReducer = (state = [], action)=> {
 			];
 		default:
 			return state;
-	}
+	};
+};
+
+export var testingReducer = (state = 'nope', action)=> {
+	switch(action.type) {
+		case 'FUCK':
+			return [
+				...state
+			];
+		default:
+			return state;
+	};
 };

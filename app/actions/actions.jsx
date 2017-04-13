@@ -4,3 +4,10 @@ export var addDecks = (decks)=> {
 		decks
 	};
 };
+
+export var test = (tests)=> {
+	return {
+		type: 'FUCK',
+		tests
+	};
+};

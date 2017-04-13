@@ -7,7 +7,7 @@ class DeckApp extends React.Component {
 	render () {
 		return (
 			<div>
-				<h1>Home Welcome Msg</h1>
+				<h1>Welcome Msg</h1>
 			</div>
 		);
 	}

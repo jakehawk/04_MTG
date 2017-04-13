@@ -1,10 +1,11 @@
 import Redux, {createStore, combineReducers} from 'redux';
-import {decksReducer} from 'reducers';
+import {decksReducer, testingReducer} from 'reducers';
 
 export var configure = ()=> {
-	console.log('testing b4');
+	console.log(decksReducer);
 	var reducer = Redux.combineReducers({
-		decks: decksReducer
+		decks: decksReducer,
+		tests: testingReducer
 	});
 	console.log(reducer);
 	var store = Redux.createStore(reducer, Redux.compose(

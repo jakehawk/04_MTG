@@ -10,6 +10,7 @@ import {
 
 import DeckApp from 'DeckApp';
 import MTGAPI from 'MTGAPI';
+import actions from 'actions';
 var store = require('configureStore').configure();
 
 // store.subscribe(()=> {
