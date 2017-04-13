@@ -10,20 +10,21 @@ import {
 
 import DeckApp from 'DeckApp';
 import MTGAPI from 'MTGAPI';
-import actions from 'actions';
-// var actions = require('actions');
+// import actions from 'actions';
+var actions = require('actions');
 var store = require('configureStore').configure();
 
-// store.subscribe(()=> {
-// 	var state = store.getState();
-// 	console.log('New state', state);
-// 	MTGAPI.getDecks(state.decks);
-// });
+store.subscribe(()=> {
+	var state = store.getState();
+	console.log('New state', state);
+	// store.dispatch(actions.addDecks(initialDecks));
+});
 
 var initialDecks = MTGAPI.getDecks();
 
+console.log(actions);
 store.dispatch(actions.addDecks(initialDecks));
-console.log(initialDecks);
+// console.log(initialDecks);
 // Load foundation
 $(document).foundation();
 

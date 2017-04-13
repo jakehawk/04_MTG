@@ -3,22 +3,16 @@ import * as Redux from 'react-redux';
 
 import MTGAPI from 'MTGAPI';
 import DeckList from 'DeckList';
-import Deck from 'Deck';
+import $ from 'jquery';
 
-class DeckApp extends React.Component {
-	render () {
-		var renderDecks = ()=> {
-			return MTGAPI.getDecks().map((deck)=> {
-				<Deck key={deck.id} {...deck}/>
-			});
-		};
-
+export class DeckApp extends React.Component {
+	render() {
 		return (
 			<div>
-				{renderDecks()}
+				<DeckList/>
 			</div>
 		);
-	}
-}
+	};
+};
 
 export default Redux.connect()(DeckApp);

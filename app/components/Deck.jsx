@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import actions from 'actions';
 
-class Deck extends React.Component {
+export class Deck extends React.Component {
 	render () {
 		var {
 					id,
@@ -14,6 +14,8 @@ class Deck extends React.Component {
 
 		return (
 			<p>{name}</p>
-		)
-	}
-}
+		);
+	};
+};
+
+export default connect()(Deck);
