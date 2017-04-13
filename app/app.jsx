@@ -23,7 +23,8 @@ store.subscribe(()=> {
 var initialDecks = MTGAPI.getDecks();
 
 console.log(actions);
-store.dispatch(actions.addDecks(initialDecks));
+store.dispatch(actions.startAddDecks());
+console.log('test');
 // console.log(initialDecks);
 // Load foundation
 $(document).foundation();
