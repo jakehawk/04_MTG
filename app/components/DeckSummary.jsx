@@ -3,22 +3,25 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import actions from 'actions';
 
-export class Deck extends React.Component {
+export class DeckSummary extends React.Component {
 	render () {
 		var {
 					id,
 					name,
 					format,
-					colors
+					spells
 				} = this.props;
 
+
+
 		return (
-			<div>
-				<p>{name}</p>
-				<p>{format}</p>
+			<div className="deck">
+				<p>{name} - {format}</p>
+				<p className="deck__subtext">Has {spells.length}</p>
+
 			</div>
 		);
 	};
 };
 
-export default connect()(Deck);
+export default connect()(DeckSummary);

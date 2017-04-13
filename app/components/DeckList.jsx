@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import MTGAPI from 'MTGAPI';
-import Deck from 'Deck';
+import DeckSummary from 'DeckSummary';
 import $ from 'jquery';
 
 export class DeckList extends React.Component {
@@ -16,7 +16,7 @@ export class DeckList extends React.Component {
 			} else {
 				return decks.map((deck)=> {
 					return (
-						<Deck key={deck.id} {...deck}/>
+						<DeckSummary key={deck.id} {...deck}/>
 					);
 				});
 			}

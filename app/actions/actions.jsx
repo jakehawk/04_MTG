@@ -9,6 +9,8 @@ export var addDecks = (decks)=> {
 	};
 };
 
+
+// Function handles api call
 export var startAddDecks = (decks)=> {
 	return (dispatch, getState)=> {
 		var decks,

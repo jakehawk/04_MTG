@@ -9,7 +9,16 @@ export class DeckApp extends React.Component {
 	render() {
 		return (
 			<div>
-				<DeckList/>
+				<h1 className="page-title">MTG Decks</h1>
+
+				<div className="row">
+					<div className="column small-centered small-10 medium-8 large-6">
+						<div className="container">
+							<DeckList/>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		);
 	};
