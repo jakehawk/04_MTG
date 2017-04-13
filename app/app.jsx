@@ -10,7 +10,8 @@ import {
 
 import DeckApp from 'DeckApp';
 import MTGAPI from 'MTGAPI';
-import actions from 'actions';
+// import actions from 'actions';
+var actions = require('actions');
 var store = require('configureStore').configure();
 
 // store.subscribe(()=> {
@@ -18,7 +19,7 @@ var store = require('configureStore').configure();
 // 	console.log('New state', state);
 // 	MTGAPI.getDecks(state.decks);
 // });
-
+console.log(actions);
 var initialDecks = MTGAPI.getDecks();
 store.dispatch(actions.addDecks(initialDecks));
 
