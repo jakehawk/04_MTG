@@ -14,17 +14,11 @@ import MTGAPI from 'MTGAPI';
 var actions = require('actions');
 var store = require('configureStore').configure();
 
-store.subscribe(()=> {
-	var state = store.getState();
-	console.log('New state', state);
-	// store.dispatch(actions.addDecks(initialDecks));
-});
+// var initialDecks = MTGAPI.getDecks();
 
-var initialDecks = MTGAPI.getDecks();
-
-console.log(actions);
+// console.log(actions);
 store.dispatch(actions.startAddDecks());
-console.log('test');
+// console.log('test');
 // console.log(initialDecks);
 // Load foundation
 $(document).foundation();

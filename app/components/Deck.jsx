@@ -13,7 +13,10 @@ export class Deck extends React.Component {
 				} = this.props;
 
 		return (
-			<p>{name}</p>
+			<div>
+				<p>{name}</p>
+				<p>{format}</p>
+			</div>
 		);
 	};
 };

@@ -7,15 +7,18 @@ import $ from 'jquery';
 
 export class DeckList extends React.Component {
 	render() {
-		var decks = MTGAPI.getDecks();
+		var {decks} = this.props;
+		console.log(decks);
 
 		var renderDecks = ()=> {
-			if ($.isArray(decks)){
-				return decks.map((deck)=> {
-					<Deck key={deck.id} {...deck}/>
-				});
-			} else {
+			if (decks.length === 0){
 				return <p>pls wait</p>
+			} else {
+				return decks.map((deck)=> {
+					return (
+						<Deck key={deck.id} {...deck}/>
+					);
+				});
 			}
 		};
 
