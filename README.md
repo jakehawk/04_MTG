@@ -13,7 +13,7 @@ It's been a long time since our second project and I feel like now I can actuall
 ### [MTG API](https://docs.magicthegathering.io/) providing info for [my backend](https://github.com/jakehawk/04_MTG_API)  
 
 ## Approach  
-I went into this project feeling pretty confident in my react skills.  After successfully setting up my back end I dove a little deeper into react and especially into redux which is a change from using an MVC model.  This was much more complicated than first thought.  Hoping something will be done by Friday to show.
+I went into this project feeling pretty confident in my react skills.  After successfully setting up my back end I dove a little deeper into react and especially into redux which is a change from using an MVC model.  This was much more complicated than first thought.  Hoping something will be done by Friday to show. **It wasn't**
 
 ## Major Hurdles
 **Redux**
