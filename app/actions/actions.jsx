@@ -36,3 +36,10 @@ export var showDeck = (deck)=> {
 		deck
 	};
 };
+
+// Sign up
+export var startSignup = (newUser)=> {
+	return (dispatch, getState)=> {
+		axios
+	}
+}
