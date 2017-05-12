@@ -9,7 +9,12 @@ import {
 			 } from 'react-router';
 
 import DeckApp from 'DeckApp';
+import Nav from 'Nav';
+
+import Signup from 'Signup';
+
 import MTGAPI from 'MTGAPI';
+
 // import actions from 'actions';
 var actions = require('actions');
 var store = require('configureStore').configure();
@@ -31,6 +36,7 @@ ReactDOM.render(
   	<Router history={hashHistory}>
   		<Route path="/">
   			<IndexRoute component={DeckApp}/>
+        <Route path="sign-up" component={Signup} />
   		</Route>
   	</Router>
   </Provider>,

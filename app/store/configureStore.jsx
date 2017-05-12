@@ -1,7 +1,7 @@
 import * as redux from 'redux';
 import thunk from 'redux-thunk';
 
-import {decksReducer, testingReducer} from 'reducers';
+import {decksReducer, authReducer} from 'reducers';
 
 export var configure = (initialState = {})=> {
 	var reducer = redux.combineReducers({

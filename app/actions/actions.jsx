@@ -40,13 +40,15 @@ export var showDeck = (deck)=> {
 // Sign up
 export var startSignup = (newUser)=> {
 	return (dispatch, getState)=> {
-		$.post(URL + '/api/users', newUser, (res)=> {
-			if (res.success) {
-				// creating a token upon success
-				var token = res.token;
+		axios
+			.post(URL + '/api/users', newUser, (res)=> {
+				if (res.success) {
+					// creating a token upon success
+					var token = res.token;
 
-				
-			}
+					// retrieve user information
+
+				}
 		})
 	}
 }
