@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const GET_DECKS_URL = 'http://mtg-deck-api.herokuapp.com/api/decks';
+const URL = 'http://mtg-deck-api.herokuapp.com';
 
 // Function handles api call
 export var startAddDecks = (decks)=> {
 	return (dispatch, getState)=> {
 		var decks,
-				requestUrl = GET_DECKS_URL;
+				requestUrl = URL + '/api/decks';
 
 		return axios
 			.get(requestUrl)
@@ -40,6 +40,13 @@ export var showDeck = (deck)=> {
 // Sign up
 export var startSignup = (newUser)=> {
 	return (dispatch, getState)=> {
-		axios
+		$.post(URL + '/api/users', newUser, (res)=> {
+			if (res.success) {
+				// creating a token upon success
+				var token = res.token;
+
+				
+			}
+		})
 	}
 }

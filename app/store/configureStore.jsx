@@ -5,8 +5,8 @@ import {decksReducer, testingReducer} from 'reducers';
 
 export var configure = (initialState = {})=> {
 	var reducer = redux.combineReducers({
-		decks: decksReducer,
-		tests: testingReducer
+		decks : decksReducer,
+		auth 	: authReducer
 	});
 
 	// Creates store to be used
