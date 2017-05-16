@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import actions from 'actions';
 
+import Foundation from 'react-foundation';
+
 import Spell from 'Spell';
 
 export class DeckSummary extends React.Component {
@@ -69,16 +71,19 @@ export class DeckSummary extends React.Component {
 		return (
 			<div className="deck" >
 				<div className="row">
-					<h3>{name} - {format}</h3>
-					<hr/>
-					<div>
-						<h4>Creatures</h4>
-						{renderSpell(creatures)}
-					</div>
-					<div>
-						<h4>Instants</h4>
-						{renderSpell(instants)}
-					</div>
+					<h3>{name}</h3>
+					<Row className="display">
+						<Column small={8} large={7} >
+							<div>
+								<h4>Creatures</h4>
+								{renderSpell(creatures)}
+							</div>
+							<div>
+								<h4>Instants</h4>
+								{renderSpell(instants)}
+							</div>
+						</Column>
+					</Row>
 				</div>
 			</div>
 		);
