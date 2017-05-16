@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const URL = 'http://mtg-deck-api.herokuapp.com';
+const URL = 'http://mtg-deck-api.herokuapp.com/api';
 
 // Function handles api call
 export var startAddDecks = (decks)=> {
 	return (dispatch, getState)=> {
 		var decks,
-				requestUrl = URL + '/api/decks';
+				requestUrl = URL + '/decks';
 
 		return axios
 			.get(requestUrl)
@@ -40,15 +40,35 @@ export var showDeck = (deck)=> {
 // Sign up
 export var startSignup = (newUser)=> {
 	return (dispatch, getState)=> {
-		axios
-			.post(URL + '/api/users', newUser, (res)=> {
-				if (res.success) {
-					// creating a token upon success
-					var token = res.token;
+		$.post(URL + '/users', newUser, (res)=> {
+			if (res.success) {
+				// creating a token upon success
+				var token = res.token;
 
-					// retrieve user information
+				// retrieve user information
+				$.post(URL + '/me', { token: token }, (finalRes)=> {
+					if (finalRes.success)
+						dispatch(login(token, finalRes.user));
+					else
+						dispatch(failedLogin(finalRes.error));
+				});
+			} else {
+				dispatch(failedSignup(res.error));
+			}
+		});
+	}
+};
 
-				}
-		})
+export var failedSignup = (errors)=> {
+	return {
+		type 					: 'FAILED_SIGNUP',
+		authenticated : false,
+		errors 				: errors
+	};
+};
+
+export var startLogin = (credentials)=> {
+	return (dispatch, getState)=> {
+		$.post(URL + '')
 	}
 }

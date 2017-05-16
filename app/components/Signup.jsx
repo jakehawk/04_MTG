@@ -20,7 +20,7 @@ export const Signup = React.createClass({
 	render: function() {
 		return (
 			<div className="signup-form">
-				<Link className="menu-link" to="/">Menu</Link>
+				<Link to="/">Home</Link>
 				<form onSubmit={this.onSignup}>
 					<h3>Sign Up</h3>
 
@@ -31,12 +31,12 @@ export const Signup = React.createClass({
 
 					<div>
 						<label>Email:</label>
-						<input type="text" ref="name"/>
+						<input type="text" ref="email"/>
 					</div>
 
 					<div>
 						<label>Password:</label>
-						<input type="text" ref="name"/>
+						<input type="password" ref="password"/>
 					</div>
 					
 					<hr/>

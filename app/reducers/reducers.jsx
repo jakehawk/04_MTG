@@ -16,7 +16,7 @@ export var authReducer = (state = {}, action)=> {
 			return {
 				authenticated : action.authenticated,
 				token 				: action.token,
-				handle 				: action.name,
+				name  				: action.name,
 				email					: action.email
 			}
 		case 'FAILED_SIGNUP':
